@@ -96,6 +96,11 @@ SQL> GRANT RESOURCE TO iidrsource;
 Grant succeeded.
 
 ```
+
+GRANT CREATE SESSION, CREATE VIEW, ALTER SESSION, CREATE SEQUENCE TO iidrsource;
+GRANT CREATE SYNONYM, CREATE DATABASE LINK, RESOURCE , UNLIMITED TABLESPACE TO iidrsource;
+
+
 ## Verify the user is created
 ```
 SQL> SELECT username, account_status FROM dba_users WHERE username='IIDRSOURCE';
@@ -105,3 +110,13 @@ USERNAME															 ACCOUNT_STATUS
 IIDRSOURCE															 OPEN
 
 ```
+
+Reference https://docs.oracle.com/en/cloud/paas/exadata-express-cloud/csdbp/create-database-schemas.html#GUID-955764C0-599E-4488-96EA-6E13A6FEBE9A
+
+# Out of the box Oracle Sample data
+
+Oracle provides some sample data which may be used for the demos. That is available by the link:
+
+https://github.com/oracle-samples/db-sample-schemas/releases/tag/v21.1
+
+The file from the link should be uploaded to VM and unpacked
