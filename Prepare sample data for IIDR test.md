@@ -48,6 +48,38 @@ SQL> CREATE USER iidrsource IDENTIFIED BY iidrsource;
 
 User created.
 ```
+## Verify existing tablespaces
+We need to search for existing tablespaces in order to use one of those for the schema data storage.
+```
+[oracle@oracleVM ~]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Tue Jun 14 05:54:03 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> SELECT TABLESPACE_NAME, STATUS, CONTENTS FROM USER_TABLESPACES;
+
+TABLESPACE_NAME 	       STATUS	 CONTENTS
+------------------------------ --------- ---------------------
+SYSTEM			       ONLINE	 PERMANENT
+SYSAUX			       ONLINE	 PERMANENT
+UNDOTBS1		       ONLINE	 UNDO
+TEMP			       ONLINE	 TEMPORARY
+USERS			       ONLINE	 PERMANENT
+```
+In this case there is USERS tablespace present, so we can use that for the purpose of the demo.
+
+
+
+
+
+
 ## Grant user privileges
 
 ```
