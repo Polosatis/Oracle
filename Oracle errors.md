@@ -1,10 +1,10 @@
 # Oracle errors list
 
-### ORA-65096
+## ORA-65096
 99.9% of the time the error ORA-65096: invalid common user or role name means you are logged into the CDB when you should be logged into a PDB. For example, if you used the default 19c installation settings, you should login to ORCLPDB (the PDB) instead of ORCL (the CDB).
+___
 
-
-### ORA-01078 - LRM-00109
+## ORA-01078 - LRM-00109
 ORA-01078: failure in processing system parameters LRM-00109: could not open parameter file
 
 in my case the file init... .ora was missing in $ORACLE_HOME/dbs/
@@ -12,6 +12,9 @@ in my case the file init... .ora was missing in $ORACLE_HOME/dbs/
 
 Oracle doesnt startup in sqlplus using STARTUP command
 Same as start.sh script is not working correctly
+
+https://docs.oracle.com/database/121/UNXAR/strt_stp.htm#UNXAR417
+
 
 The isssue it that there is invalid entry in the /etc/oratab.
 
