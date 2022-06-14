@@ -136,15 +136,18 @@ Otherwise the oracle silent installation script will show error that Oracle is n
 Switch to the ORACLE_HOME directory, unzip the software directly into this path and start the Oracle Universal Installer (OUI) by issuing one of the following commands in the ORACLE_HOME directory. The interactive mode will display GUI installer screens to allow user input, while the silent mode will install the software without displaying any screens, as all required options are already specified on the command line.
 
  Unzip software.
-```cd $ORACLE_HOME
+```
+cd $ORACLE_HOME
 unzip -oq /path/to/software/LINUX.X64_193000_db_home.zip
 ```
 Fake Oracle Linux 7.
-```export CV_ASSUME_DISTID=OEL7.6
+```
+export CV_ASSUME_DISTID=OEL7.6
 ```
 
 Interactive mode.
-```./runInstaller
+```
+./runInstaller
 ```
 
 Silent mode.
@@ -171,7 +174,7 @@ Run the root scripts when prompted.
 
 As a root user, execute the following script(s):
 ```
-        1. /u01/app/oraInventory/orainstRoot.sh
+ 1. /u01/app/oraInventory/orainstRoot.sh
         2. /u01/app/oracle/product/19.0.0/dbhome_1/root.sh
 ```
 
