@@ -174,6 +174,24 @@ PDB$SEED
 2385533864	    3
 PDB1
 ```
+Alternative option
+
+```
+PDB
+sqlplus system@SJWPDB01
+
+SQL> select sys_context('USERENV','CON_NAME') CON_NAME,
+            sys_context('USERENV','CON_ID') CON_ID,
+            sys_context('USERENV','DB_NAME') DB_NAME from DUAL;
+
+CON_NAME   CON_ID     DB_NAME
+---------- ---------- ----------
+SJWPDB01   3          SJW12C01
+```
+Pay attention to the DB_NAME. It will always return the name of the (Root) Container Database. You may considered the CON_ID. Don’t be confused – CON_ID 0 means the whole Multitenant Database and 1 is reserved for the Root Container. CON_ID 2 is always PDB$SEED. Everything else from CON_ID 3 up is a Pluggable Databases.
+
+Having that in mind and with a bit of DECODE you get the current database name and if you are connected to a CDB or PDB:
+
 
 Reference: https://www.carajandb.com/en/blog/2017/help-where-am-i-cdb-or-pdb-and-which-db-anyway/
 
