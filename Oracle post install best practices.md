@@ -76,7 +76,6 @@ PDB1 =
      )
      (CONNECT_DATA =
         (SERVICE_NAME = PDB1)
-       (INSTANCE_NAME = PDB1)
      )
    )
 [oracle@oracleVM admin]$ 
