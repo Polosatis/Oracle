@@ -176,7 +176,7 @@ PDB$SEED
 PDB1
 ```
 
-
+Reference: https://www.carajandb.com/en/blog/2017/help-where-am-i-cdb-or-pdb-and-which-db-anyway/
 
 
 
