@@ -132,3 +132,18 @@ db-sample-schemas-21.1/CONTRIBUTING.md
 db-sample-schemas-21.1/LICENSE.md
 ```
 
+Make sure that Perl is deployed or deploy that:
+```
+[oracle@oracleVM Downloads]$ sudo yum install perl
+Updating Subscription Management repositories.
+Last metadata expiration check: 3:47:56 ago on Tue 14 Jun 2022 04:07:20 AM PDT.
+Dependencies resolved.
+=================================================================================================================================================================================
+ Package                                      Architecture           Version                                              Repository                                        Size
+=================================================================================================================================================================================
+Installing:
+ perl                                         x86_64                 4:5.26.3-421.el8                                     rhel-8-for-x86_64-appstream-rpms                  73 k
+```
+Wait until Completed message on the screen
+
+
