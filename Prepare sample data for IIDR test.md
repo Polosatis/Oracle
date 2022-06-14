@@ -54,6 +54,15 @@ User created.
 SQL> GRANT CREATE TABLE TO iidrsource;
 
 Grant succeeded.
+
+SQL> GRANT CONNECT TO iidrsource;
+
+Grant succeeded.
+
+SQL> GRANT RESOURCE TO iidrsource;
+
+Grant succeeded.
+
 ```
 ## Verify the user is created
 ```
