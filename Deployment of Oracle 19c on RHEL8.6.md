@@ -126,6 +126,11 @@ groupadd -g 54322 dba
 groupadd -g 54323 oper 
 ```
 If output is different, then those changes are not applied to user. Group output shows current status, while Group oracle output shows what's in configuration files on different levels. 
+
+The groups command shows the groups as currently applied to your user, and the list will start with the current primary group followed by the supplementary groups from the time of login. Any changes to the sources of the data from after the time of login are not reflected in the displayed list.
+
+The groups username command is asking Linux to calculate the groups for that user, which it will do using principally the files /etc/password and /etc/groups and then the additional sources.
+
 To apply all changes the log-out - log-in should be performed and then validation re-run.
 
 Otherwise the oracle silent installation script will show error that Oracle is not a part of DBA group and fail with Fatal error.
