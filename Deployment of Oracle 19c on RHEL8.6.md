@@ -249,6 +249,7 @@ DATA_DIR='/u02/oradata'
 PDB_NAME=ORCLPDB
 ```
 
-## Important notice
 
-At this moment the Database Express Management Console is not enabled
+
+
+
