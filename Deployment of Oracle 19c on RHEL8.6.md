@@ -182,7 +182,15 @@ As a root user, execute the following script(s):
  1. /u01/app/oraInventory/orainstRoot.sh
         2. /u01/app/oracle/product/19.0.0/dbhome_1/root.sh
 ```
-
+After DB creation is complete there will be a link for the logs on the process run details
+```
+Database creation complete. For details check the logfiles at:
+ /u01/app/oracle/cfgtoollogs/dbca/cdb1.
+Database Information:
+Global Database Name:cdb1
+System Identifier(SID):cdb1
+Look at the log file "/u01/app/oracle/cfgtoollogs/dbca/cdb1/cdb1.log" for further details.
+```
 _____
 ## Database Creation
 
