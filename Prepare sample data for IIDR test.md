@@ -124,3 +124,11 @@ Oracle provides some sample data which may be used for the demos. That is availa
 https://github.com/oracle-samples/db-sample-schemas/releases/tag/v21.1
 
 The file from the link should be uploaded to VM and unpacked
+```
+[oracle@oracleVM Downloads]$ mkdir DBSample
+[oracle@oracleVM Downloads]$ tar -xvf db-sample-schemas-21.1.tar.gz --directory DBSample
+db-sample-schemas-21.1/
+db-sample-schemas-21.1/CONTRIBUTING.md
+db-sample-schemas-21.1/LICENSE.md
+```
+
