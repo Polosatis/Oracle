@@ -146,4 +146,52 @@ Installing:
 ```
 Wait until Completed message on the screen
 
+```
+[oracle@oracleVM human_resources]$ source /usr/local/bin/oraenv
+ORACLE_SID = [cdb1] ? 
+The Oracle base remains unchanged with value /u01/app/oracle
+```
+prior to executing next step make sure that current folder is the top dirrectory of sample folder holding the ```mksample.sql``` file
+```
+[oracle@oracleVM human_resources]$ sqlplus system/SysPassword1@PDB1
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Tue Jun 14 08:31:26 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> @mksample SysPassword1 SysPassword1 InfoServer InfoServer InfoServer InfoServer InfoServer InfoServer users temp /home/oracle/ PDB1
+```
+This script will take up to 10 minutes to run. After that in the home folder there will be a set of log files available for analysis.
+```
+[oracle@oracleVM ~]$ pwd
+/home/oracle
+[oracle@oracleVM ~]$ ls -la
+total 204
+drwx------. 19 oracle oracle    4096 Jun 14 08:45 .
+drwxr-xr-x.  3 root   root        20 Jun  9 03:56 ..
+-rw-rw-r--.  1 oracle oracle    2345 Jun 14 08:45 bi_v3.log
+-rw-rw-r--.  1 oracle oracle    2126 Jun 14 08:44 chan_v3.log
+-rw-rw-r--.  1 oracle oracle    2369 Jun 14 08:43 coun_v3.log
+-rw-rw-r--.  1 oracle oracle    3609 Jun 14 08:43 cust1v3.log
+-rw-rw-r--.  1 oracle oracle    2802 Jun 14 08:44 dem1v3.log
+-rw-rw-r--.  1 oracle oracle    2673 Jun 14 08:44 dmsal_v3.log
+-rw-r--r--.  1 oracle oracle    5508 Jun 14 08:45 ext_1v3.log
+-rw-rw-r--.  1 oracle oracle    6142 Jun 14 08:39 hr_main.log
+-rw-rw-r--.  1 oracle oracle    7038 Jun 14 08:42 ix_v3.log
+-rw-rw-r--.  1 oracle oracle   62145 Jun 14 08:45 mkverify_v3.log
+-rw-rw-r--.  1 oracle oracle    5985 Jun 14 08:41 oe_oc_v3.log
+-rw-rw-r--.  1 oracle oracle     599 Jun 14 08:42 pm_main.log
+-rw-rw-r--.  1 oracle oracle    5170 Jun 14 08:42 pm_p_lob.log
+-rw-rw-r--.  1 oracle oracle    3667 Jun 14 08:43 prod1v3.log
+-rw-rw-r--.  1 oracle oracle    2718 Jun 14 08:43 prom1v3.log
+-rw-rw-r--.  1 oracle oracle    3155 Jun 14 08:44 sale1v3.log
+-rw-rw-r--.  1 oracle oracle    6085 Jun 14 08:45 sh_v3.log
+-rw-rw-r--.  1 oracle oracle    4794 Jun 14 08:43 time_v3.log
+```
 
