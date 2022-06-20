@@ -195,3 +195,169 @@ drwxr-xr-x.  3 root   root        20 Jun  9 03:56 ..
 -rw-rw-r--.  1 oracle oracle    4794 Jun 14 08:43 time_v3.log
 ```
 
+```
+[oracle@oracleVM db-sample-schemas-21.1]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Tue Jun 14 09:22:57 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> alter session set container=PDB1;
+
+Session altered.
+
+SQL> create role IIDRALL;
+
+Role created.
+
+```
+
+```
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='HR' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON HR.'||t.object_name||' TO IIDRALL';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON HR.'||t.object_name||' TO IIDRALL';
+    END IF;
+  END LOOP;
+END;
+
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='HR' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON HR.'||t.object_name||' TO iidrsource';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON HR.'||t.object_name||' TO iidrsource';
+    END IF;
+  END LOOP;
+END;
+/
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='BI' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON BI.'||t.object_name||' TO iidrsource';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON BI.'||t.object_name||' TO iidrsource';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='OE' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON OE.'||t.object_name||' TO IIDRALL';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON OE.'||t.object_name||' TO IIDRALL';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='PM' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON PM.'||t.object_name||' TO IIDRALL';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON PM.'||t.object_name||' TO IIDRALL';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='IX' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON IX.'||t.object_name||' TO IIDRALL';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON IX.'||t.object_name||' TO IIDRALL';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='SH' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON SH.'||t.object_name||' TO IIDRALL';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON SH.'||t.object_name||' TO IIDRALL';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner='HR' AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON HR.'||t.object_name||' TO IIDRALL';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON HR.'||t.object_name||' TO IIDRALL';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+BEGIN
+  FOR t IN (SELECT object_name, object_type FROM all_objects WHERE owner IN ('HR', 'BI', 'OE', 'PM', 'IX', 'SH') AND object_type IN ('TABLE','VIEW','PROCEDURE','FUNCTION','PACKAGE')) LOOP
+    IF t.object_type IN ('TABLE','VIEW') THEN
+      EXECUTE IMMEDIATE 'GRANT SELECT, UPDATE, INSERT, DELETE ON SOURCEUSER.'||t.object_name||' TO IIDRALL';
+    ELSIF t.object_type IN ('PROCEDURE','FUNCTION','PACKAGE') THEN
+      EXECUTE IMMEDIATE 'GRANT EXECUTE ON TEST1.'||t.object_name||' TO IIDRALL';
+    END IF;
+  END LOOP;
+END;
+
+/
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Next to check the data we should use the previously created user IIDRSOURCE to connect to PDB1. None of the created in sample databases users has the CONNECT privilege.
+```
+[oracle@oracleVM db-sample-schemas-21.1]$ sqlplus IIDRSOURCE/iidrsource@PDB1
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Tue Jun 14 09:03:06 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Last Successful login time: Tue Jun 14 2022 04:31:07 -07:00
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+```
+Based on a single table of HR schema check the content uploaded:
+```
+
+
+
