@@ -92,7 +92,135 @@ END;
 PL/SQL procedure successfully completed.
 
 
+User iidrsource has been created in another file (preparation of the data)
 
+There is a need to provide this user additinal privileges. Those are located in the files which are available after Oracle xStream agent install (prior to instance creation) in the #AGENT#/Samples folder.
+
+Files are named  createuser-ora-nodba.sql and createuser-ora-xstream.sql 
+
+SQL> alter session set container=PDB1;
+
+Session altered.
+
+
+-- Grant basic roles
+grant connect to iidrsource;
+grant resource to iidrsource;
+grant select_catalog_role to iidrsource;
+grant unlimited tablespace to iidrsource;
+
+-- Table DDL permissions
+grant create any table to iidrsource;
+grant alter any table to iidrsource;
+grant drop any table to iidrsource;
+grant lock any table to iidrsource;
+
+-- Table DML permissions
+grant select any table to iidrsource;
+grant flashback any table to iidrsource;
+grant insert any table to iidrsource;
+grant update any table to iidrsource;
+grant delete any table to iidrsource;
+
+-- Index and view DDL permissions
+grant create any index to iidrsource;
+grant alter any index to iidrsource;
+grant drop any index to iidrsource;
+grant create any view to iidrsource;
+grant drop any view to iidrsource;
+
+-- Trigger DDL and DML permissions (only required for CDC Trigger-based)
+grant create any trigger to iidrsource;
+grant alter any trigger to iidrsource;
+grant drop any trigger to iidrsource;
+
+-- Sequence DDL and DML permissions (only required for CDC Trigger-based)
+grant create any sequence to iidrsource;
+grant select any sequence to iidrsource;
+
+-- Procedure permissions
+grant create any procedure to iidrsource;
+grant execute any procedure to iidrsource;
+
+-- Permission to perform select on the v_$ tables
+grant select any dictionary to iidrsource;
+
+-- General system views
+grant select on sys.v_$database to iidrsource;
+grant select on sys.v_$controlfile to iidrsource;
+grant select on sys.v_$version to iidrsource;
+grant select on sys.nls_database_parameters to iidrsource;
+
+-- Archive and redo logs
+grant select on sys.v_$log to iidrsource;
+grant select on sys.v_$logfile to iidrsource;
+grant select on sys.v_$archived_log to iidrsource;
+grant select on sys.v_$log_history to iidrsource;
+
+-- Sessions and transactions
+grant alter session to iidrsource;
+grant select on sys.v_$session to iidrsource;
+grant select on sys.gv_$session to iidrsource;
+grant select on sys.v_$transaction to iidrsource;
+grant select on sys.v_$mystat to iidrsource;
+
+-- Tables, indexes, columns and related views
+grant select on sys.all_coll_types to iidrsource;
+grant select on sys.all_type_attrs to iidrsource;
+grant select on sys.dba_tables to iidrsource;
+grant select on sys.dba_tab_comments to iidrsource;
+grant select on sys.dba_tab_columns to iidrsource;
+grant select on sys.dba_col_comments to iidrsource;
+grant select on sys.dba_indexes to iidrsource;
+grant select on sys.dba_ind_columns to iidrsource;
+grant select on sys.all_constraints to iidrsource;
+grant select on sys.dba_constraints to iidrsource;
+grant select on sys.all_cons_columns to iidrsource;
+grant select on sys.dba_cons_columns to iidrsource;
+grant select on sys.tab$ to iidrsource;
+grant select on sys.ind$ to iidrsource;
+grant select on sys.lob$ to iidrsource;
+grant select on sys.col$ to iidrsource;
+grant select on sys.icol$ to iidrsource;
+grant select on sys.coltype$ to iidrsource;
+grant select on sys.attrcol$ to iidrsource;
+grant select on sys.ccol$ to iidrsource;
+grant select on sys.cdef$ to iidrsource;
+
+-- Miscellaneous other objects
+grant select on sys.obj$ to iidrsource;
+grant select on sys.dba_mviews to iidrsource;
+grant select on sys.dba_objects to iidrsource;
+grant select on sys.dba_sequences to iidrsource;
+grant select on sys.hist_head$ to iidrsource;
+grant select on sys.resource_cost to iidrsource;
+
+-- Storage
+grant select on sys.dba_tablespaces to iidrsource;
+grant select on sys.dba_rollback_segs to iidrsource;
+
+-- Permissions
+grant select on sys.dba_users to iidrsource;
+grant select on sys.dba_sys_privs to iidrsource;
+grant select on sys.dba_tab_privs to iidrsource;
+grant select on sys.dba_profiles to iidrsource;
+grant select on sys.dba_roles to iidrsource;
+grant select on sys.user$ to iidrsource;
+grant select on user_role_privs to iidrsource;
+
+grant execute on DBMS_CAPTURE_ADM to iidrsource;
+
+grant execute on DBMS_XSTREAM_ADM to iidrsource;
+
+
+
+SQL> alter session set container=CDB$ROOT;
+
+Session altered.
+
+SQL> ALTER SYSTEM SET enable_goldengate_replication=TRUE SCOPE=BOTH;
+
+System altered.
 
 
 
