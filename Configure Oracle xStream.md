@@ -15,3 +15,37 @@ configuration is aligned with "Figure 4-1 Local Capture and Outbound Server in t
 follow the guidance in https://docs.oracle.com/en/database/oracle/oracle-database/19/xstrm/configuring-xstream-out.html#GUID-C0E1C4AC-994A-4F62-B580-63742C9B7128
 4.1.2.1 Configure an XStream Administrator on All Databases
 
+
+[root@oracleVM /]# mkdir /oracle
+
+[root@oracleVM /]# chown oracle oracle:oinstall
+[root@oracleVM /]# su - oracle
+[oracle@oracleVM /]$ cd /oracle
+[oracle@oracleVM oracle]$ mkdir dbs
+[oracle@oracleVM oracle]$ chown oracle:oinstall dbs
+
+
+
+
+
+ sqlplus sys/SysPassword1@CDB1 as sysdba
+
+create a tablespace for the XStream administrator
+
+SQL> CREATE TABLESPACE xstream_tbs DATAFILE '/oracle/dbs/xstream_tbs.dbf' 
+  SIZE 25M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;  2  
+
+Tablespace created.
+
+Create a new user to act as the XStream administrator
+
+When creating an XStream administrator in a CDB, then the XStream administrator must be a common user. Therefore, include the CONTAINER=ALL clause in the CREATE USER statement:
+
+CREATE USER c##xstrmadmin IDENTIFIED BY xstrmadmin 
+  DEFAULT TABLESPACE xstream_tbs
+  QUOTA UNLIMITED ON xstream_tbs
+  CONTAINER=ALL;
+
+
+
+
