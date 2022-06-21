@@ -247,9 +247,9 @@ exit;
 EOF
 
 ```
-
 in my case connect to
-```sqlplus sys/oracle@ORCL as sysdba
+```
+sqlplus sys/oracle@ORCL as sysdba
 ```
 and then in case of execution of command above the parameters are equal to:
 ```
