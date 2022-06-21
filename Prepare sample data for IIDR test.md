@@ -325,20 +325,7 @@ END;
 
 /
 
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
 Next to check the data we should use the previously created user IIDRSOURCE to connect to PDB1. None of the created in sample databases users has the CONNECT privilege.
