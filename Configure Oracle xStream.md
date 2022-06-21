@@ -95,6 +95,122 @@ END;
 ';4
 PL/SQL procedure successfully completed.
 ```
+Grant privileges according to IIDR documentation.  Those are located in the files which are available after Oracle xStream agent install (prior to instance creation) in the #AGENT#/Samples folder.
+
+Files are named  createuser-ora-nodba.sql and createuser-ora-xstream.sql 
+```
+-- Grant basic roles
+grant connect to c##xstrmadmin;
+grant resource to c##xstrmadmin;
+grant select_catalog_role to c##xstrmadmin;
+grant unlimited tablespace to c##xstrmadmin;
+
+-- Table DDL permissions
+grant create any table to c##xstrmadmin;
+grant alter any table to c##xstrmadmin;
+grant drop any table to c##xstrmadmin;
+grant lock any table to c##xstrmadmin;
+
+-- Table DML permissions
+grant select any table to c##xstrmadmin;
+grant flashback any table to c##xstrmadmin;
+grant insert any table to c##xstrmadmin;
+grant update any table to c##xstrmadmin;
+grant delete any table to c##xstrmadmin;
+
+-- Index and view DDL permissions
+grant create any index to c##xstrmadmin;
+grant alter any index to c##xstrmadmin;
+grant drop any index to c##xstrmadmin;
+grant create any view to c##xstrmadmin;
+grant drop any view to c##xstrmadmin;
+
+-- Trigger DDL and DML permissions (only required for CDC Trigger-based)
+grant create any trigger to c##xstrmadmin;
+grant alter any trigger to c##xstrmadmin;
+grant drop any trigger to c##xstrmadmin;
+
+-- Sequence DDL and DML permissions (only required for CDC Trigger-based)
+grant create any sequence to c##xstrmadmin;
+grant select any sequence to c##xstrmadmin;
+
+-- Procedure permissions
+grant create any procedure to c##xstrmadmin;
+grant execute any procedure to c##xstrmadmin;
+
+-- Permission to perform select on the v_$ tables
+grant select any dictionary to c##xstrmadmin;
+
+-- General system views
+grant select on sys.v_$database to c##xstrmadmin;
+grant select on sys.v_$controlfile to c##xstrmadmin;
+grant select on sys.v_$version to c##xstrmadmin;
+grant select on sys.nls_database_parameters to c##xstrmadmin;
+
+-- Archive and redo logs
+grant select on sys.v_$log to c##xstrmadmin;
+grant select on sys.v_$logfile to c##xstrmadmin;
+grant select on sys.v_$archived_log to c##xstrmadmin;
+grant select on sys.v_$log_history to c##xstrmadmin;
+
+-- Sessions and transactions
+grant alter session to c##xstrmadmin;
+grant select on sys.v_$session to c##xstrmadmin;
+grant select on sys.gv_$session to c##xstrmadmin;
+grant select on sys.v_$transaction to c##xstrmadmin;
+grant select on sys.v_$mystat to c##xstrmadmin;
+
+-- Tables, indexes, columns and related views
+grant select on sys.all_coll_types to c##xstrmadmin;
+grant select on sys.all_type_attrs to c##xstrmadmin;
+grant select on sys.dba_tables to c##xstrmadmin;
+grant select on sys.dba_tab_comments to c##xstrmadmin;
+grant select on sys.dba_tab_columns to c##xstrmadmin;
+grant select on sys.dba_col_comments to c##xstrmadmin;
+grant select on sys.dba_indexes to c##xstrmadmin;
+grant select on sys.dba_ind_columns to c##xstrmadmin;
+grant select on sys.all_constraints to c##xstrmadmin;
+grant select on sys.dba_constraints to c##xstrmadmin;
+grant select on sys.all_cons_columns to c##xstrmadmin;
+grant select on sys.dba_cons_columns to c##xstrmadmin;
+grant select on sys.tab$ to c##xstrmadmin;
+grant select on sys.ind$ to c##xstrmadmin;
+grant select on sys.lob$ to c##xstrmadmin;
+grant select on sys.col$ to c##xstrmadmin;
+grant select on sys.icol$ to c##xstrmadmin;
+grant select on sys.coltype$ to c##xstrmadmin;
+grant select on sys.attrcol$ to c##xstrmadmin;
+grant select on sys.ccol$ to c##xstrmadmin;
+grant select on sys.cdef$ to c##xstrmadmin;
+
+-- Miscellaneous other objects
+grant select on sys.obj$ to c##xstrmadmin;
+grant select on sys.dba_mviews to c##xstrmadmin;
+grant select on sys.dba_objects to c##xstrmadmin;
+grant select on sys.dba_sequences to c##xstrmadmin;
+grant select on sys.hist_head$ to c##xstrmadmin;
+grant select on sys.resource_cost to c##xstrmadmin;
+
+-- Storage
+grant select on sys.dba_tablespaces to c##xstrmadmin;
+grant select on sys.dba_rollback_segs to c##xstrmadmin;
+
+-- Permissions
+grant select on sys.dba_users to c##xstrmadmin;
+grant select on sys.dba_sys_privs to c##xstrmadmin;
+grant select on sys.dba_tab_privs to c##xstrmadmin;
+grant select on sys.dba_profiles to c##xstrmadmin;
+grant select on sys.dba_roles to c##xstrmadmin;
+grant select on sys.user$ to c##xstrmadmin;
+grant select on user_role_privs to c##xstrmadmin;
+
+grant execute on DBMS_CAPTURE_ADM to c##xstrmadmin;
+
+grant execute on DBMS_XSTREAM_ADM to c##xstrmadmin;
+```
+
+
+
 ## Create a new user for CDC data access
 
 User iidrsource has been created in another file (preparation of the data)
