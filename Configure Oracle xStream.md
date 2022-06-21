@@ -222,5 +222,87 @@ System altered.
 ```
 
 
+## Creation of the Meta Schema
+
+```
+SQL> CREATE USER iidrmeta IDENTIFIED BY iidrmeta;
+
+User created.
+
+grant create any sequence to iidrmeta;
+grant select any sequence to iidrmeta;
+
+-- Procedure permissions
+grant create any procedure to iidrmeta;
+grant execute any procedure to iidrmeta;
+
+-- Permission to perform select on the v_$ tables
+grant select any dictionary to iidrmeta;
+
+-- General system views
+grant select on sys.v_$database to iidrmeta;
+grant select on sys.v_$controlfile to iidrmeta;
+grant select on sys.v_$version to iidrmeta;
+grant select on sys.nls_database_parameters to iidrmeta;
+
+-- Archive and redo logs
+grant select on sys.v_$log to iidrmeta;
+grant select on sys.v_$logfile to iidrmeta;
+grant select on sys.v_$archived_log to iidrmeta;
+grant select on sys.v_$log_history to iidrmeta;
+
+-- Sessions and transactions
+grant alter session to iidrmeta;
+grant select on sys.v_$session to iidrmeta;
+grant select on sys.gv_$session to iidrmeta;
+grant select on sys.v_$transaction to iidrmeta;
+grant select on sys.v_$mystat to iidrmeta;
+
+-- Tables, indexes, columns and related views
+grant select on sys.all_coll_types to iidrmeta;
+grant select on sys.all_type_attrs to iidrmeta;
+grant select on sys.dba_tables to iidrmeta;
+grant select on sys.dba_tab_comments to iidrmeta;
+grant select on sys.dba_tab_columns to iidrmeta;
+grant select on sys.dba_col_comments to iidrmeta;
+grant select on sys.dba_indexes to iidrmeta;
+grant select on sys.dba_ind_columns to iidrmeta;
+grant select on sys.all_constraints to iidrmeta;
+grant select on sys.dba_constraints to iidrmeta;
+grant select on sys.all_cons_columns to iidrmeta;
+grant select on sys.dba_cons_columns to iidrmeta;
+grant select on sys.tab$ to iidrmeta;
+grant select on sys.ind$ to iidrmeta;
+grant select on sys.lob$ to iidrmeta;
+grant select on sys.col$ to iidrmeta;
+grant select on sys.icol$ to iidrmeta;
+grant select on sys.coltype$ to iidrmeta;
+grant select on sys.attrcol$ to iidrmeta;
+grant select on sys.ccol$ to iidrmeta;
+grant select on sys.cdef$ to iidrmeta;
+
+-- Miscellaneous other objects
+grant select on sys.obj$ to iidrmeta;
+grant select on sys.dba_mviews to iidrmeta;
+grant select on sys.dba_objects to iidrmeta;
+grant select on sys.dba_sequences to iidrmeta;
+grant select on sys.hist_head$ to iidrmeta;
+grant select on sys.resource_cost to iidrmeta;
+
+-- Storage
+grant select on sys.dba_tablespaces to iidrmeta;
+grant select on sys.dba_rollback_segs to iidrmeta;
+
+-- Permissions
+grant select on sys.dba_users to iidrmeta;
+grant select on sys.dba_sys_privs to iidrmeta;
+grant select on sys.dba_tab_privs to iidrmeta;
+grant select on sys.dba_profiles to iidrmeta;
+grant select on sys.dba_roles to iidrmeta;
+grant select on sys.user$ to iidrmeta;
+grant select on user_role_privs to iidrmeta;
+```
+
+
 
 
