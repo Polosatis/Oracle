@@ -573,7 +573,7 @@ PL/SQL procedure successfully completed.
 This created an outbound server with name ```xout``` for 4 schemas (iidrsource, hr, oe, sh) of PDB1 including all tables in them.
 
 # Test of xStream Outbound server
-The following procedure may help to verify if the connection by previously created user can be done to a newly created server:
+The following procedure may help to verify if the connection by previously created user can be set to a newly created server:
 
 ```
 SQL> BEGIN
