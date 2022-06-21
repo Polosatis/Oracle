@@ -531,6 +531,59 @@ Database altered.
 
 # Configuring XStream Out 
 
+https://docs.oracle.com/en/database/oracle/oracle-database/19/xstrm/configuring-xstream-out.html#GUID-A1C8430E-565B-4F66-8E00-495F283AAAFB
 
+An outbound server in an XStream Out configuration streams Oracle database changes to a client application.
 
+The client application attaches to the outbound server using the Oracle Call Interface (OCI) or Java interface to receive these changes.
+
+Configuring an outbound server involves creating the components that send captured database changes to the outbound server. It also involves configuring the outbound server itself, which includes specifying the connect user that the client application will use to attach to the outbound server.
+
+You can create an outbound server using the following procedures in the DBMS_XSTREAM_ADM package:
+
+* The CREATE_OUTBOUND procedure creates an outbound server, a queue, and a capture process in a single database with one procedure call.
+* The ADD_OUTBOUND procedure can create an outbound server, or it can add an outbound server to an existing XStream Out configuration. When you use this procedure on a database without an existing XStream Out configuration, it only creates an outbound server. You must create the capture process and queue separately, and they must exist before you run the ADD_OUTBOUND procedure. You can configure the capture process on the same database as the outbound server or on a different database.
+
+In both cases, you must create the client application that communicates with the outbound server and receives LCRs from the outbound server.
+
+```
+SQL> alter session set container=CDB$ROOT;
+
+Session altered.
+
+SQL> DECLARE
+  tables  DBMS_UTILITY.UNCL_ARRAY;
+  schemas DBMS_UTILITY.UNCL_ARRAY;
+BEGIN
+    tables(1)  := NULL;
+    schemas(1) := 'iidrsource';
+    schemas(2) := 'hr';
+    schemas(3) := 'oe';
+    schemas(3) := 'sh';
+  DBMS_XSTREAM_ADM.CREATE_OUTBOUND(
+    server_name     =>  'xout',
+    source_database =>  'PDB1',
+    table_names     =>  tables,
+    schema_names    =>  schemas);
+END;
+/  2    3    4    5    6    7    8    9   10   11   12   13   14   15   16  
+
+PL/SQL procedure successfully completed.
+```
+This created an outbound server with name ```xout``` for 4 schemas (iidrsource, hr, oe, sh) of PDB1 including all tables in them.
+
+# Test of xStream Outbound server
+The following procedure may help to verify if the connection by previously created user can be done to a newly created server:
+
+```
+SQL> BEGIN
+  DBMS_XSTREAM_ADM.ALTER_OUTBOUND(
+    server_name     =>  'xout',
+    connect_user    =>  'c##xstrmadmin'
+  );
+END;  2    3    4    5    6  
+  7  /
+
+PL/SQL procedure successfully completed.
+```
 
