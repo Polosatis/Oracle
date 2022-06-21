@@ -12,13 +12,11 @@ configuration is aligned with "Figure 4-1 Local Capture and Outbound Server in t
 
 # Creation of the users and schema
 
+## Creation of the tablespace
 follow the guidance in https://docs.oracle.com/en/database/oracle/oracle-database/19/xstrm/configuring-xstream-out.html#GUID-C0E1C4AC-994A-4F62-B580-63742C9B7128
 4.1.2.1 Configure an XStream Administrator on All Databases
 ```
 [root@oracleVM /]# mkdir /oracle
-```
-
-```
 [root@oracleVM /]# chown oracle oracle:oinstall
 [root@oracleVM /]# su - oracle
 [oracle@oracleVM /]$ cd /oracle
@@ -28,9 +26,9 @@ follow the guidance in https://docs.oracle.com/en/database/oracle/oracle-databas
 
 ```
  sqlplus sys/SysPassword1@CDB1 as sysdba
-
+```
 create a tablespace for the XStream administrator
-
+```
 SQL> CREATE TABLESPACE xstream_tbs DATAFILE '/oracle/dbs/xstream_tbs.dbf' 
   SIZE 25M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;  2  
 
@@ -58,7 +56,7 @@ SQL> CREATE TABLESPACE xstream_tbs DATAFILE '/oracle/dbs/xstream_tbs_pdb1.dbf'
 Tablespace created.
 ```
 
-Create a new user to act as the XStream administrator
+## Create a new user to act as the XStream administrator
 
 When creating an XStream administrator in a CDB, then the XStream administrator must be a common user. Therefore, include the CONTAINER=ALL clause in the CREATE USER statement
 In a CDB, when ALL is specified for the container parameter, the current container must be the CDB root (CDB$ROOT). 
@@ -89,6 +87,7 @@ END;
 ';4
 PL/SQL procedure successfully completed.
 ```
+## Create a new user for CDC data access
 
 User iidrsource has been created in another file (preparation of the data)
 
@@ -382,5 +381,32 @@ Current log sequence	       39
 SQL> exit
 Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
 Version 19.3.0.0.0
+```
+
+# Enable supplemental logging
+
 
 ```
+[oracle@oracleVM scripts]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Tue Jun 21 08:53:25 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> ALTER DATABASE ADD SUPPLEMENTAL LOG DATA 
+   (PRIMARY KEY, UNIQUE, FOREIGN KEY) COLUMNS;
+  2  
+Database altered.
+```
+
+# Configuring XStream Out 
+
+
+
+
