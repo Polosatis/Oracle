@@ -14,20 +14,19 @@ configuration is aligned with "Figure 4-1 Local Capture and Outbound Server in t
 
 follow the guidance in https://docs.oracle.com/en/database/oracle/oracle-database/19/xstrm/configuring-xstream-out.html#GUID-C0E1C4AC-994A-4F62-B580-63742C9B7128
 4.1.2.1 Configure an XStream Administrator on All Databases
-
-
+```
 [root@oracleVM /]# mkdir /oracle
+```
 
+```
 [root@oracleVM /]# chown oracle oracle:oinstall
 [root@oracleVM /]# su - oracle
 [oracle@oracleVM /]$ cd /oracle
 [oracle@oracleVM oracle]$ mkdir dbs
 [oracle@oracleVM oracle]$ chown oracle:oinstall dbs
+```
 
-
-
-
-
+```
  sqlplus sys/SysPassword1@CDB1 as sysdba
 
 create a tablespace for the XStream administrator
@@ -36,8 +35,11 @@ SQL> CREATE TABLESPACE xstream_tbs DATAFILE '/oracle/dbs/xstream_tbs.dbf'
   SIZE 25M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;  2  
 
 Tablespace created.
+```
+
 If you are creating an XStream administrator in a CDB, then you must create the tablespace in all of the containers in the CDB, including the CDB root, all pluggable databases (PDBs), all application roots, and all application containers. The tablespace is required in all containers because the XStream administrator must be a common user and so must have access to the tablespace in any container.
 
+```
 $ sqlplus sys/SysPassword1@PDB1 as sysdba
 
 SQL*Plus: Release 19.0.0.0.0 - Production on Mon Jun 20 09:24:09 2022
@@ -54,17 +56,13 @@ SQL> CREATE TABLESPACE xstream_tbs DATAFILE '/oracle/dbs/xstream_tbs_pdb1.dbf'
   SIZE 25M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;  2  
 
 Tablespace created.
-
-
-
-
-
+```
 
 Create a new user to act as the XStream administrator
 
 When creating an XStream administrator in a CDB, then the XStream administrator must be a common user. Therefore, include the CONTAINER=ALL clause in the CREATE USER statement
 In a CDB, when ALL is specified for the container parameter, the current container must be the CDB root (CDB$ROOT). 
-
+```
 SQL> alter session set container=CDB$ROOT;
 
 Session altered.
@@ -90,14 +88,14 @@ END;
 /  2    3    4    5    6    7    8  
 ';4
 PL/SQL procedure successfully completed.
-
+```
 
 User iidrsource has been created in another file (preparation of the data)
 
 There is a need to provide this user additinal privileges. Those are located in the files which are available after Oracle xStream agent install (prior to instance creation) in the #AGENT#/Samples folder.
 
 Files are named  createuser-ora-nodba.sql and createuser-ora-xstream.sql 
-
+```
 SQL> alter session set container=PDB1;
 
 Session altered.
@@ -211,9 +209,9 @@ grant select on user_role_privs to iidrsource;
 grant execute on DBMS_CAPTURE_ADM to iidrsource;
 
 grant execute on DBMS_XSTREAM_ADM to iidrsource;
+```
 
-
-
+```
 SQL> alter session set container=CDB$ROOT;
 
 Session altered.
@@ -221,7 +219,7 @@ Session altered.
 SQL> ALTER SYSTEM SET enable_goldengate_replication=TRUE SCOPE=BOTH;
 
 System altered.
-
+```
 
 
 
