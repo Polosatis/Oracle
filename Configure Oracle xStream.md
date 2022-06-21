@@ -312,4 +312,84 @@ For downstream capture processes, the downstream database also must be in ARCHIV
 
 If you are configuring XStream in an Oracle Real Application Clusters (Oracle RAC) environment, then the archived redo log files of all threads from all instances must be available to any instance running a capture process. This requirement pertains to both local and downstream capture processes.
 
+## Check that DB is not already in ARCHIVELOG
+```
+[oracle@oracleVM db-sample-schemas-21.1]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Tue Jun 21 06:22:36 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> alter session set container=CDB$ROOT;
+
+Session altered.
+
+SQL> archive log list
+Database log mode	       No Archive Mode
+Automatic archival	       Disabled
+Archive destination	       /u01/app/oracle/product/19.0.0/dbhome_1/dbs/arch
+Oldest online log sequence     37
+Current log sequence	       39
+```
+## Enable ARCHIVELOG mode
+
+https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/managing-archived-redo-log-files.html#GUID-C12EA833-4717-430A-8919-5AEA747087B9
+
+Shutdown database to make changes
+```
+SQL> SHUTDOWN IMMEDIATE;
+Database closed.
+Database dismounted.
+```
+Start a new instance and mount, but do not open, the database.
+```
+SQL> STARTUP MOUNT;
+ORACLE instance started.
+
+Total System Global Area 1577055400 bytes
+Fixed Size		    9135272 bytes
+Variable Size		  436207616 bytes
+Database Buffers	 1124073472 bytes
+Redo Buffers		    7639040 bytes
+Database mounted.
+```
+Change the database archiving mode. Then open the database for normal operations.
+
+```
+SQL> ALTER DATABASE ARCHIVELOG;
+
+Database altered.
+
+SQL> ALTER DATABASE OPEN;
+
+Database altered.
+```
+Verify that DB is in ARCHIVELOG mode
+```
+SQL> archive log list
+Database log mode	       Archive Mode
+Automatic archival	       Enabled
+Archive destination	       /u01/app/oracle/product/19.0.0/dbhome_1/dbs/arch
+Oldest online log sequence     37
+Next log sequence to archive   39
+Current log sequence	       39
+SQL> exit
+Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+```
+
+
+```
+```
+
+```
+```
+
 
