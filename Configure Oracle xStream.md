@@ -304,5 +304,12 @@ grant select on user_role_privs to iidrmeta;
 ```
 
 
+# Ensure That Each Source Database Is in ARCHIVELOG Mode
+
+Each source database that generates changes that will be captured by a capture process must be in ARCHIVELOG mode.
+
+For downstream capture processes, the downstream database also must be in ARCHIVELOG mode if you plan to configure a real-time downstream capture process. The downstream database does not need to be in ARCHIVELOG mode if you plan to run only archived-log downstream capture processes on it.
+
+If you are configuring XStream in an Oracle Real Application Clusters (Oracle RAC) environment, then the archived redo log files of all threads from all instances must be available to any instance running a capture process. This requirement pertains to both local and downstream capture processes.
 
 
