@@ -55,6 +55,14 @@ SQL> CREATE TABLESPACE xstream_tbs DATAFILE '/oracle/dbs/xstream_tbs_pdb1.dbf'
 
 Tablespace created.
 ```
+## Required privileges documentation
+
+By this link the details about privileges for each of the users who are part of IIDR replication are specified:
+
+(Knowledge Center IBM Data Replication. Granting required privileges to Oracle users using SQL scripts in the /samples directory)
+
+https://www.ibm.com/docs/en/idr/11.4.0?topic=ccreox-granting-required-privileges-oracle-users-using-sql-scripts-in-samples-directory
+
 
 ## Create a new user to act as the XStream administrator
 
