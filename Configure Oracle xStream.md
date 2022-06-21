@@ -304,7 +304,7 @@ grant select on user_role_privs to iidrmeta;
 ```
 
 
-# Ensure That Each Source Database Is in ARCHIVELOG Mode
+# Ensure That Each Source Database is in ARCHIVELOG Mode
 
 Each source database that generates changes that will be captured by a capture process must be in ARCHIVELOG mode.
 
@@ -384,12 +384,3 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.3.0.0.0
 
 ```
-
-
-```
-```
-
-```
-```
-
-
