@@ -390,6 +390,8 @@ iidr@iidr-virtual-machine:~$
 
 # Check of the IIDR metadata on Oracle side
 
+## Metadata Tables
+
 Verify that Metadata on IIDR has been successfully created and populated on Oracle PDB1 in schema iidrmeta
 
 ```
@@ -414,6 +416,61 @@ TS_BOOKMARK
 TS_CONFAUD
 ```
 
+## Initiate the changes on the source
+
+Connect to Oracle using iidrsource user. Insert a single line into Countries table:
+```
+INSERT INTO HR.COUNTRIES (COUNTRY_ID, COUNTRY_NAME, REGION_ID) VALUES('TS', 'TEST', 1);
+```
+
+## Verify that cahnges have been tracked
+
+Switch to Management console
+
+Monitoring tab, select subscription OracleToKafka
+
+in the bottom section select Collect statistic and browse content
+
+You should now see Cummulative numbers in few lines increased from 0 to 1 on both Source and Target relates operations lists
+
+
+## Verify that changes have been delivered
+
+Switch to the Kafka server and check that data has been landed to Kafka topic
+```
+iidr@iidr-virtual-machine:~$ kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic kafkatarget.oracleto.sourcedb.hr.countries-json
+{"COUNTRY_ID":"AR","COUNTRY_NAME":{"string":"Argentina"},"REGION_ID":{"string":"2.0"}}
+{"COUNTRY_ID":"AU","COUNTRY_NAME":{"string":"Australia"},"REGION_ID":{"string":"3.0"}}
+{"COUNTRY_ID":"BE","COUNTRY_NAME":{"string":"Belgium"},"REGION_ID":{"string":"1.0"}}
+{"COUNTRY_ID":"BR","COUNTRY_NAME":{"string":"Brazil"},"REGION_ID":{"string":"2.0"}}
+{"COUNTRY_ID":"CA","COUNTRY_NAME":{"string":"Canada"},"REGION_ID":{"string":"2.0"}}
+{"COUNTRY_ID":"CH","COUNTRY_NAME":{"string":"Switzerland"},"REGION_ID":{"string":"1.0"}}
+{"COUNTRY_ID":"CN","COUNTRY_NAME":{"string":"China"},"REGION_ID":{"string":"3.0"}}
+{"COUNTRY_ID":"DE","COUNTRY_NAME":{"string":"Germany"},"REGION_ID":{"string":"1.0"}}
+{"COUNTRY_ID":"DK","COUNTRY_NAME":{"string":"Denmark"},"REGION_ID":{"string":"1.0"}}
+{"COUNTRY_ID":"EG","COUNTRY_NAME":{"string":"Egypt"},"REGION_ID":{"string":"4.0"}}
+{"COUNTRY_ID":"FR","COUNTRY_NAME":{"string":"France"},"REGION_ID":{"string":"1.0"}}
+{"COUNTRY_ID":"IL","COUNTRY_NAME":{"string":"Israel"},"REGION_ID":{"string":"4.0"}}
+{"COUNTRY_ID":"IN","COUNTRY_NAME":{"string":"India"},"REGION_ID":{"string":"3.0"}}
+{"COUNTRY_ID":"IT","COUNTRY_NAME":{"string":"Italy"},"REGION_ID":{"string":"1.0"}}
+{"COUNTRY_ID":"JP","COUNTRY_NAME":{"string":"Japan"},"REGION_ID":{"string":"3.0"}}
+{"COUNTRY_ID":"KW","COUNTRY_NAME":{"string":"Kuwait"},"REGION_ID":{"string":"4.0"}}
+{"COUNTRY_ID":"ML","COUNTRY_NAME":{"string":"Malaysia"},"REGION_ID":{"string":"3.0"}}
+{"COUNTRY_ID":"MX","COUNTRY_NAME":{"string":"Mexico"},"REGION_ID":{"string":"2.0"}}
+{"COUNTRY_ID":"NG","COUNTRY_NAME":{"string":"Nigeria"},"REGION_ID":{"string":"4.0"}}
+{"COUNTRY_ID":"NL","COUNTRY_NAME":{"string":"Netherlands"},"REGION_ID":{"string":"1.0"}}
+{"COUNTRY_ID":"SG","COUNTRY_NAME":{"string":"Singapore"},"REGION_ID":{"string":"3.0"}}
+{"COUNTRY_ID":"UK","COUNTRY_NAME":{"string":"United Kingdom"},"REGION_ID":{"string":"1.0"}}
+{"COUNTRY_ID":"US","COUNTRY_NAME":{"string":"United States of America"},"REGION_ID":{"string":"2.0"}}
+{"COUNTRY_ID":"ZM","COUNTRY_NAME":{"string":"Zambia"},"REGION_ID":{"string":"4.0"}}
+{"COUNTRY_ID":"ZW","COUNTRY_NAME":{"string":"Zimbabwe"},"REGION_ID":{"string":"4.0"}}
+{"COUNTRY_ID":"TS","COUNTRY_NAME":{"string":"TEST"},"REGION_ID":{"string":"1.0"}}
+```
+
+Here you can see a new line at the bottom of the topic:
+```
+{"COUNTRY_ID":"TS","COUNTRY_NAME":{"string":"TEST"},"REGION_ID":{"string":"1.0"}}
+```
 
 # Profit!!
 
